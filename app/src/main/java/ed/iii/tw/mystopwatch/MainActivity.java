@@ -20,16 +20,17 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
     private boolean isRunnin;
     private Button left, right;
-    private int i, lapCount;
+    private long i, lapCount;
     private Timer timer;
     private ClockTask clockTask;
     private UIHandler handler;
-    private TextView clock;
+    private TextView clock_hr, clock_min, clock_sec, clock_ms;
     private ListView list;
     private SimpleAdapter adapter;
     private String[] from = {"ed"};
     private int[] to = {R.id.lap_content};
     private List<Map<String, String>> data;
+    private int hr, min, sec, ms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         left = (Button) findViewById(R.id.left);
         right = (Button) findViewById(R.id.right);
-        clock = (TextView) findViewById(R.id.clock);
+        clock_hr = (TextView) findViewById(R.id.clock_hr);
+        clock_min = (TextView) findViewById(R.id.clock_min);
+        clock_sec = (TextView) findViewById(R.id.clock_sec);
+        clock_ms = (TextView) findViewById(R.id.clock_ms);
         timer = new Timer();
         handler = new UIHandler();
 
@@ -90,15 +94,20 @@ public class MainActivity extends AppCompatActivity {
     }
     private void doLap(){
         Map<String, String> row = new HashMap<>();
-        row.put(from[0], ++lapCount + ". " + i);
+        StringBuilder sb = new StringBuilder();
+        sb.append((hr<10?"0"+hr:hr)+":"+(min<10?"0"+min:min)+":"+(sec<10?"0"+sec:sec)+"."+(ms<10?"0"+ms:ms));
+        row.put(from[0], ++lapCount + ". " + sb);
         data.add(0, row);
         adapter.notifyDataSetChanged();
     }
     private void doReset(){
-        i = 0;
+        i = lapCount = 0;
         data.clear();
         adapter.notifyDataSetChanged();
-        clock.setText("" + i);
+        clock_hr.setText("00");
+        clock_min.setText("00");
+        clock_sec.setText("00");
+        clock_ms.setText("00");
     }
 
     @Override
@@ -117,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
             i++;
             Message mesg = new Message();
             Bundle data = new Bundle();
-            data.putInt("i", i);
+            data.putLong("i", i);
             mesg.setData(data);
             handler.sendMessage(mesg);
         }
@@ -127,8 +136,15 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            int i = msg.getData().getInt("i");
-            clock.setText("" + i);
+            long i = msg.getData().getLong("i");
+            hr = (int)((i / (100 * 60 * 60))%24);
+            min = (int)((i / (100 * 60 ))%60);
+            sec = (int)((i / 100)%60);
+            ms = (int)(i % 100);
+            clock_hr.setText(hr < 10 ? "0" + hr : "" + hr);
+            clock_min.setText(min < 10 ? "0" + min : "" + min);
+            clock_sec.setText(sec < 10 ? "0" + sec : "" + sec);
+            clock_ms.setText(ms < 10 ? "0" + ms : "" + ms);
         }
     }
 }

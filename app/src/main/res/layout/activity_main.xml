@@ -6,15 +6,79 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/clock_hr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00"
+            android:textSize="60sp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            />
+        <TextView
+            android:id="@+id/clock_colon1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textSize="60sp"
+            android:layout_weight="0"
+            android:layout_gravity="center"
+            />
+        <TextView
+            android:id="@+id/clock_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00"
+            android:textSize="60sp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            />
+        <TextView
+            android:id="@+id/clock_colon2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textSize="60sp"
+            android:layout_weight="0"
+            android:layout_gravity="center"
+            />
+        <TextView
+            android:id="@+id/clock_sec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="00"
+            android:textSize="60sp"
+            android:textAlignment="center"
+            />
+        <TextView
+            android:id="@+id/clock_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="."
+            android:textSize="60sp"
+            android:layout_weight="0"
+            android:layout_gravity="center"
+            />
+        <TextView
+            android:id="@+id/clock_ms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00"
+            android:textSize="60sp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            />
 
-    <TextView
-        android:id="@+id/clock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="00:00:00.12"
-        android:textSize="48sp"
-        android:layout_gravity="center"
-        />
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
